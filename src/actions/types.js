@@ -2,3 +2,7 @@ export const SEARCH_MOVIE = 'SEARCH_MOVIE';
 export const FETCH_MOVIES = 'FETCH_MOVIES';
 export const FETCH_MOVIE = 'FETCH_MOVIE';
 export const LOADING = 'LOADING';
+export const CHANGE_PAGE = 'CHANGE_PAGE'
+export const FETCH_ALL_MOVIES = 'FETCH_ALL_MOVIES';
+export const EMPTY_ALL_MOVIES = 'EMPTY_ALL_MOVIES';
+export const SORT_ALL_MOVIES = 'SORT_ALL_MOVIES';

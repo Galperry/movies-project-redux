@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import {connect} from 'react-redux';
 
-import {searchMovie, fetchMovies, setLoading} from '../../actions/searchActions'
+import {searchMovie, fetchMovies, setLoading, fetchAllMovies, emptyAllMovies} from '../../actions/searchActions'
 
 class SearchForm extends Component {
 
@@ -9,11 +9,16 @@ class SearchForm extends Component {
         this.props.searchMovie(e.target.value)
     }
 
-    onSubmit = e =>{
+    onSubmit = async (e) => {
         e.preventDefault();
-        this.props.fetchMovies(this.props.text)
+        await this.props.fetchMovies(this.props.text, this.props.page)
         this.props.setLoading()
-        console.log(this.props)
+
+        await this.props.emptyAllMovies();
+
+        for (let i = 1 ; i <= (Math.ceil(this.props.movies.totalResults/10)); i++){
+          this.props.fetchAllMovies(this.props.text, i)
+      }
     }
 
     render() {
@@ -42,7 +47,10 @@ class SearchForm extends Component {
 }
 
 const mapStateToProps = state => ({
-    text: state.movies.text
+    text: state.movies.text,
+    page: state.movies.page,
+    allMovies: state.movies.allMovies,
+    movies: state.movies.movies
 })
 
-export default connect(mapStateToProps, {searchMovie, fetchMovies, setLoading})(SearchForm)
+export default connect(mapStateToProps, {searchMovie, fetchMovies, setLoading, fetchAllMovies, emptyAllMovies})(SearchForm)
